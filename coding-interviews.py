@@ -1,3 +1,10 @@
+#!/usr/bin/python3
+#-*-coding:utf-8 -*-
+# __Author__  : 随心
+# __Time__    : 2019/3/26 10:26 PM
+# __File__    : coding-interviews.py
+# __Software__: PyCharm
+
 #牛客网剑指offer Python实现
 #1、在二維數組中判斷是否存在值target
 '''
@@ -45,7 +52,6 @@ class Solution2:
         return su
 
 
-    
 #3、从尾到头打印链表
 '''
 输入一个链表，按链表值从尾到头的顺序返回一个ArrayList。
@@ -66,3 +72,130 @@ class Solution3:
             return []
 
 
+#4、重构二叉树
+'''
+输入某二叉树的前序遍历和中序遍历的结果，
+请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
+例如输入前序遍历序列{1,2,4,7,3,5,6,8}和
+中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
+{1,2,5,3,4,6,7}
+'''
+
+# -*- coding:utf-8 -*-
+class TreeNode:
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+class Solution4_1:
+    # 返回构造的TreeNode根节点
+    def reConstructBinaryTree(self, pre, tin):
+        # write co de here
+        print(len(pre))
+        if len(pre)==0 or len(tin)==0:
+            return None
+        root_data=TreeNode(pre.pop(0))
+        k=tin.index(root_data.val)
+        print(pre,tin)
+        root_data.left=self.reConstructBinaryTree(pre,tin[:k])
+        root_data.right=self.reConstructBinaryTree(pre,tin[k+1:])
+        return root_data
+
+class Solution4_2:
+    # 返回构造的TreeNode根节点
+    def reConstructBinaryTree(self, pre, tin):
+        if len(tin) == 0:
+            return None
+        else:
+            root = TreeNode(pre[0])
+            slt = tin.index(pre[0])
+            root.left = self.reConstructBinaryTree(pre[1:1+slt],tin[:slt])
+            root.right = self.reConstructBinaryTree(pre[1+slt:],tin[slt+1:])
+        return root
+
+
+#5、用两个栈实现队列
+'''
+用两个栈来实现一个队列，完成队列的Push和Pop操作。 
+队列中的元素为int类型。
+'''
+# -*- coding:utf-8 -*-
+class Solution5:
+    def __init__(self):
+        self.stack1=[1,2,3]  #入栈
+        self.stack2=[5,6,7]  #出栈
+
+    def push(self, node):
+        # write code here
+        self.stack1.append(node)
+
+    def pop(self):
+        # return xx
+        if self.stack2:
+            return self.stack2.pop()
+        elif not self.stack1:
+            return None
+        else:
+            while self.stack1:
+                self.stack2.append(self.stack1.pop())
+                return self.stack2.pop()
+
+#6、旋转数组中的最小数字
+'''
+把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 
+输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 
+例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，
+该数组的最小值为1。 
+NOTE：给出的所有元素都大于0，
+若数组大小为0，请返回0。
+'''
+# -*- coding:utf-8 -*-
+class Solution6:
+    def minNumberInRotateArray1(self, rotateArray):
+        # write code here
+        if not rotateArray:
+            return 0
+        else:
+            minvalue=min(rotateArray)
+            return minvalue
+    def minNumberInRotateArray2(self, rotateArray):
+        # write code here
+        if not rotateArray:
+            return 0
+        else:
+            temp=2^32
+            for vale in rotateArray:
+                if temp>vale:
+                    temp=vale
+            return temp
+
+#7、斐波那契数列
+'''
+大家都知道斐波那契数列，现在要求输入一个整数n，请你输出斐波那契数列的第n项（从0开始，第0项为0）。
+n<=39
+1、1、2、3、5、8、13、21、34
+'''
+# -*- coding:utf-8 -*-
+class Solution7:
+    def Fibonacci1(self, n):
+        # write code here
+        result=[0,1]
+        if n<2:
+            return result[n]
+        else:
+            return self.Fibonacci1(n-1)+self.Fibonacci1(n-2)
+
+    def Fibonacci2(self,n):
+        n1=1
+        n2=1
+        result=0
+        if n==0:
+            return 0
+        elif n<=2:
+            return 1
+        else:
+            for i in range(3,n+1):
+                result=n1+n2
+                n1=n2
+                n2=result
+            return result
