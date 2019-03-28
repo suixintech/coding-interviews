@@ -354,4 +354,4 @@ class Solution12:
         elif exponent<0:
             return 1/eval('*'.join([str(base)] * abs(exponent)))
 
-        
+       
