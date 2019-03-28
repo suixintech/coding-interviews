@@ -23,7 +23,6 @@ class Solution1:
         i=0
         j=h-1
         while (i<w) &(j>=0):
-            print(i,j)
             if array[i][j]>target:
                 j-=1
             elif array[i][j]<target:
@@ -91,12 +90,10 @@ class Solution4_1:
     # 返回构造的TreeNode根节点
     def reConstructBinaryTree(self, pre, tin):
         # write co de here
-        print(len(pre))
         if len(pre)==0 or len(tin)==0:
             return None
         root_data=TreeNode(pre.pop(0))
         k=tin.index(root_data.val)
-        print(pre,tin)
         root_data.left=self.reConstructBinaryTree(pre,tin[:k])
         root_data.right=self.reConstructBinaryTree(pre,tin[k+1:])
         return root_data
@@ -200,7 +197,6 @@ class Solution7:
                 n2=result
             return result
 
-
 #8、跳台阶
 '''
 一只青蛙一次可以跳上1级台阶，也可以跳上2级。
@@ -208,7 +204,7 @@ class Solution7:
 '''
 
 # -*- coding:utf-8 -*-
-class Solution:
+class Solution8:
     def jumpFloor(self, number):
         # write code here
         if number==0:
@@ -226,3 +222,134 @@ class Solution:
                 n1=n2
                 n2=n3
             return n3
+
+    def jumpFloor1(self,number):
+        result=[0,1,2]
+        if number<=2:
+            return result[number]
+        else:
+            return self.jumpFloor1(number-1)+self.jumpFloor1(number-2)
+
+
+
+
+
+#9、变态跳台阶
+'''
+一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。
+求该青蛙跳上一个n级的台阶总共有多少种跳法。
+'''
+# -*- coding:utf-8 -*-
+class Solution9:
+    def jumpFloorII(self, number):
+        # write code here
+        if number==0:
+            return 0
+        elif number==1:
+            return 1
+        elif number==2:
+            return 2
+        elif number==3:
+            return 4
+        else:
+            n2=4
+            n3=0
+            for i in range(4,number+1):
+                n3=n2*2
+                n2=n3
+            return n3
+    def jumpFloorII1(self,number):
+        result=[0,1,2,4]
+        if number<=3:
+            return result[number]
+        else:
+            return self.jumpFloorII1(number-1)*2
+
+
+
+
+#10、矩阵覆盖
+'''
+我们可以用2*1的小矩形横着或者竖着去覆盖更大的矩形。
+请问用n个2*1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法
+'''
+# -*- coding:utf-8 -*-
+class Solution10:
+    def rectCover(self, number):
+        # write code here
+        if number==0:
+            return 0
+        elif number==1:
+            return 1
+        elif number==2:
+            return 2
+        else:
+            n1=1
+            n2=2
+            n3=0
+            for i in range(3,number+1):
+                n3=n1+n2
+                n1=n2
+                n2=n3
+            return n3
+
+    def rectCover1(self,number):
+        result=[0,1,2]
+        if number<=2:
+            return result[number]
+        else:
+            return self.rectCover1(number-1)+self.rectCover1(number-2)
+
+
+#11、二进制中1的个数
+'''
+输入一个整数，输出该数二进制表示中1的个数。
+其中负数用补码表示。
+'''
+# -*- coding:utf-8 -*-
+class Solution11:
+    result = []
+    def NumberOf1(self, n):
+        # write code here
+        if n==0:
+            return 0
+        for i in range(33):
+            if n==2**i:
+                self.result.append(i)
+                n=0
+                break
+            elif n<(2**i):
+                n=n-2**(i-1)
+                self.result.append(i)
+                break
+        if n>0:
+            self.NumberOf1(n)
+            return len(self.result)
+        elif n==0:
+            return len(self.result)
+
+    def NumberOf2(self,n):
+        s=0
+        if n<0:
+            n = n & 0xffffffff
+        while (n!=0):
+            s+=1
+            n=n&(n-1)
+        return s
+
+
+#12、数值的整数次方
+'''
+给定一个double类型的浮点数base和int类型的整数exponent。
+求base的exponent次方。
+'''
+# -*- coding:utf-8 -*-
+class Solution12:
+    def Power(self, base, exponent):
+        # write code here
+        if exponent==0:
+            return 1
+        elif exponent>0:
+            return eval('*'.join([str(base)]*exponent))
+        elif exponent<0:
+            return 1/eval('*'.join([str(base)] * abs(exponent)))
