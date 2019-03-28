@@ -353,3 +353,5 @@ class Solution12:
             return eval('*'.join([str(base)]*exponent))
         elif exponent<0:
             return 1/eval('*'.join([str(base)] * abs(exponent)))
+
+        
