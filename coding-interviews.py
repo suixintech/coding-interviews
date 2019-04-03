@@ -375,3 +375,52 @@ class Solution13:
                 array1.append(val)
         array1.extend(array2)
         return array1
+
+    
+#14、链表中倒数第k个结点
+
+'''
+输入一个链表，输出该链表中倒数第k个结点。
+'''
+#-*- coding:utf-8 -*-
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution14:
+    def FindKthToTail(self, head, k):
+        # write code here
+        if head is None or k<=0:
+            return None
+        p2=p1=head
+        while k>1:
+            if p2.next !=None:
+                p2=p2.next
+                k-=1
+            else:
+                return None
+
+        while p2.next!=None:
+            p1=p1.next
+            p2=p2.next
+        return p1
+
+#15、反转链表
+'''
+    输入一个链表，反转链表后，输出新链表的表头。
+'''
+class Solution15:
+    def ReverseList(self, pHead):
+        # write code here
+        if pHead is None:
+            return None
+        p=pHead
+        pnext=pHead.next
+        p.next=None
+        while pnext:
+            tmp=pnext.next
+            pnext.next=p
+            p=pnext
+            pnext=tmp
+        return p
